@@ -1823,7 +1823,7 @@ const SPA = {
         this.loadPage(pageName, true);
     },
 
-    async loadPage(pageName, pushState = true) {
+async loadPage(pageName, pushState = true) {
         try {
             let htmlContent;
             // Перевірка: якщо назва вже має .html, не додаємо його вдруге
@@ -1845,9 +1845,9 @@ const SPA = {
             const parser = new DOMParser();
             const doc = parser.parseFromString(htmlContent, 'text/html');
             
-            // === ОСЬ ТУТ БУЛА ПРОБЛЕМА: ОНОВЛЮЄМО СТИЛІ ===
+            // === ОСЬ ЦЕ ГОЛОВНА ПРАВКА ДЛЯ СТИЛІВ ===
             
-            // Видаляємо старі стилі сторінок (теги <style>)
+            // Видаляємо старі стилі сторінок (теги <style> в head), щоб вони не конфліктували
             const oldStyles = document.head.querySelectorAll('style');
             oldStyles.forEach(s => s.remove());
 
@@ -1858,7 +1858,7 @@ const SPA = {
                 styleElement.textContent = newStyle.textContent;
                 document.head.appendChild(styleElement);
             });
-            // =================================================
+            // ==========================================
 
             // 3. Підміняємо вміст BODY
             // Спочатку видаляємо скрипти з нового HTML, щоб вони не виконувалися двічі
@@ -1874,9 +1874,10 @@ const SPA = {
             }
 
             // 5. Запускаємо логіку (скрипти) для нової сторінки
+            // Викликаємо initPageScripts, яка вже є у твоєму коді
             this.initPageScripts(cleanPageName);
             
-            // Відновлюємо фулскрін
+            // Відновлюємо фулскрін (якщо така функція є у твоєму коді)
             if (typeof restoreFullscreenIfNeeded === 'function') {
                 restoreFullscreenIfNeeded();
             }
