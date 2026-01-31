@@ -3,7 +3,7 @@
     "short_name": "Privat24",
     "description": "Квитки на громадський транспорт",
     "id": "/",
-    "start_url": "/index.html",
+    "start_url": "./index.html",
     "display": "standalone",
     "orientation": "portrait",
     "background_color": "#0f0f0f",
