@@ -1,8 +1,9 @@
 {
     "name": "Privat24",
     "short_name": "Privat24",
-    "description": "Квитки на громадський транспорт - версія 3",
-    "start_url": "./transport.html",
+    "description": "Квитки на громадський транспорт",
+    "id": "/",
+    "start_url": "/transport.html",
     "display": "standalone",
     "orientation": "portrait",
     "background_color": "#0f0f0f",
