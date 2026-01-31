@@ -1,4 +1,4 @@
-const CACHE_NAME = 'transport-CAMERA-FIX-132'; // <--- 1. Зміни назву, щоб оновити кеш
+const CACHE_NAME = 'prvt_cashev1'; // <--- 1. Зміни назву, щоб оновити кеш
 const urlsToCache = [
     './',
     './transport.html',
