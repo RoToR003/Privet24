@@ -1,4 +1,4 @@
-const CACHE_NAME = 'CasheV1';
+const CACHE_NAME = 'CasheV2';
 const urlsToCache = [
     './',
     './transport.html',
