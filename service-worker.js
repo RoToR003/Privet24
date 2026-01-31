@@ -1,4 +1,4 @@
-const CACHE_NAME = 'transport-v3-FIX-STYLES';
+const CACHE_NAME = 'CasheV1';
 const urlsToCache = [
     './',
     './transport.html',
