@@ -670,31 +670,29 @@ function goToPayment() {
 /**
  * Ініціалізація QR сторінки
  */
-/**
- * Ініціалізація QR сторінки (ВИПРАВЛЕНО)
- */
+
 function initQRPage() {
-    // 1. Запускаємо камеру
+    // 1. Тільки запускаємо камеру
     startQRCamera();
     
-    // 2. Налаштування кліку по фону (Overlay)
-    // Щоб клік будь-де (крім кнопок) перекидав на оплату
+    // 2. Додатково: Клік по фону (але не по кнопках) веде на оплату
     const overlay = document.querySelector('.overlay');
     if (overlay) {
-        // Клонуємо елемент, щоб очистити старі слухачі подій
+        // Клонуємо елемент, щоб очистити старі слухачі (щоб не дублювалися)
         const newOverlay = overlay.cloneNode(true);
-        overlay.parentNode.replaceChild(newOverlay, overlay);
+        if (overlay.parentNode) {
+            overlay.parentNode.replaceChild(newOverlay, overlay);
+        }
         
         newOverlay.addEventListener('click', function(e) {
-            // Ігноруємо кліки по кнопках та іконках
+            // Якщо клікнули на кнопку або іконку - нічого не робимо (спрацює onclick кнопки)
             if (e.target.closest('button') || e.target.closest('.icon-btn') || e.target.closest('.circle-btn')) {
                 return;
             }
+            // Якщо клікнули просто по фону - йдемо на оплату
             goToPayment();
         });
     }
-    
-    // Більше нічого не чіпаємо! Кнопки працюють через onclick в HTML.
 }
     
     // Setup payment button (кнопка ліхтарика)
