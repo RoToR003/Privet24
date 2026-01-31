@@ -199,6 +199,22 @@
             /* [ЗМІНЕНО] Текст опущено ще на 10px (було 25px -> стало 35px) */
             margin-top: 35px; 
         }
+        /* ДОДАТИ ЦЕ В КІНЕЦЬ СТИЛІВ У QR.HTML */
+
+/* Робить так, щоб клік проходив КРІЗЬ іконку прямо на кнопку */
+button svg, 
+.icon-btn svg, 
+.circle-btn svg {
+    pointer-events: none !important;
+}
+
+/* Переконаємось, що кнопки завжди зверху і клікабельні */
+.icon-btn, 
+.circle-btn {
+    position: relative;
+    z-index: 20; 
+    cursor: pointer;
+}
 
     </style>
 </head>
