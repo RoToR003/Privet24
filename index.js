@@ -670,27 +670,32 @@ function goToPayment() {
 /**
  * Ініціалізація QR сторінки
  */
+/**
+ * Ініціалізація QR сторінки (ВИПРАВЛЕНО)
+ */
 function initQRPage() {
-    // Start camera
+    // 1. Запускаємо камеру
     startQRCamera();
     
-    // Setup close button (хрестик) - повернення на архів
-    const closeBtn = document.querySelector('.top-bar .icon-btn');
-    if (closeBtn) {
-        closeBtn.onclick = null;
-        closeBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            stopQRCamera();
-            window.location.href = 'index.html'; // Архів
+    // 2. Налаштування кліку по фону (Overlay)
+    // Щоб клік будь-де (крім кнопок) перекидав на оплату
+    const overlay = document.querySelector('.overlay');
+    if (overlay) {
+        // Клонуємо елемент, щоб очистити старі слухачі подій
+        const newOverlay = overlay.cloneNode(true);
+        overlay.parentNode.replaceChild(newOverlay, overlay);
+        
+        newOverlay.addEventListener('click', function(e) {
+            // Ігноруємо кліки по кнопках та іконках
+            if (e.target.closest('button') || e.target.closest('.icon-btn') || e.target.closest('.circle-btn')) {
+                return;
+            }
+            goToPayment();
         });
     }
     
-    // Setup switch camera button
-    const switchBtn = document.querySelector('.circle-btn[onclick*="switchCamera"]');
-    if (switchBtn) {
-        switchBtn.removeAttribute('onclick');
-        switchBtn.addEventListener('click', switchQRCamera);
-    }
+    // Більше нічого не чіпаємо! Кнопки працюють через onclick в HTML.
+}
     
     // Setup payment button (кнопка ліхтарика)
     const paymentBtn = document.querySelector('.circle-btn[onclick*="goToPayment"]');
