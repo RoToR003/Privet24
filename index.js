@@ -672,14 +672,14 @@ function goToPayment() {
  */
 
 function initQRPage() {
-    // 1. Запускаємо камеру (це було і це залишилось)
+    // 1. Запуск камери
     startQRCamera();
     
-    // 2. Логіка кліку по фону (об'єднана в один правильний блок)
+    // 2. Налаштування кліків по екрану (ЦЕ ОБ'ЄДНАНИЙ БЛОК)
     const overlay = document.querySelector('.overlay');
     
     if (overlay) {
-        // Видаляємо старі обробники подій через клонування (щоб не натискалось 10 разів)
+        // Видаляємо старі події (щоб не було глюків при повторному заході)
         const newOverlay = overlay.cloneNode(true);
         if (overlay.parentNode) {
             overlay.parentNode.replaceChild(newOverlay, overlay);
@@ -687,25 +687,27 @@ function initQRPage() {
         
         // Додаємо подію кліку
         newOverlay.addEventListener('click', function(e) {
-            // Перевіряємо, чи клік був НЕ по кнопках (щоб кнопки працювали)
+            // Перевіряємо: чи клікнув користувач на кнопку?
+            // Якщо так (closest повернув елемент) — ми НІЧОГО не робимо, нехай спрацює кнопка.
             if (e.target.closest('button') || e.target.closest('.icon-btn') || e.target.closest('.circle-btn')) {
                 return;
             }
-            // Якщо клікнули просто по фону — йдемо на оплату
+            
+            // Якщо клік був НЕ по кнопці (тобто по фону) — переходимо на оплату
             goToPayment();
         });
     }
 
-    // 3. Налаштування кнопки ліхтарика (повернуто всередину функції)
+    // 3. Налаштування кнопки "ліхтарика" (щоб вона вела на оплату)
     const paymentBtn = document.querySelector('.circle-btn[onclick*="goToPayment"]');
     
     if (paymentBtn) {
-        // Прибираємо старий onclick з HTML, щоб керувати через JS
+        // Видаляємо старий onclick з HTML, щоб він не заважав
         paymentBtn.removeAttribute('onclick');
         
-        // Додаємо нову подію
+        // Додаємо правильний перехід на оплату
         paymentBtn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Важливо: зупиняємо клік, щоб він не пішов далі на overlay
+            e.stopPropagation(); // Це важливо: зупиняємо клік, щоб він не пішов на фон
             goToPayment();
         });
     }
