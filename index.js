@@ -1972,7 +1972,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initNetworkMonitoring();
     
     // Реєстрація Service Worker для офлайн режиму
-    if ('serviceWorker' in navigator && isOfflineModeEnabled()) {
+    if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('service-worker.js')
             .then(registration => {
                 console.log('✅ Service Worker зареєстровано:', registration.scope);
