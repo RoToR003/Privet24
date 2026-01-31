@@ -617,15 +617,27 @@ function showQRCameraFallback() {
 }
 
 /**
- * Stop the camera
+ * Stop the camera completely
  */
 function stopQRCamera() {
     qrCameraState.scanningActive = false;
     
-    // Stop video element if present
     const videoElement = document.getElementById('camera-stream');
+    
+    // 1. Зупиняємо поточний потік у стані (якщо є збережений)
+    if (streamRef) { // Використовуємо глобальну змінну streamRef, яку ми оголошували раніше
+        streamRef.getTracks().forEach(track => {
+            track.stop();
+            // console.log("Track stopped:", track.kind);
+        });
+        streamRef = null;
+    }
+
+    // 2. Зупиняємо потік прямо з елемента відео (для надійності)
     if (videoElement && videoElement.srcObject) {
-        videoElement.srcObject.getTracks().forEach(track => track.stop());
+        const stream = videoElement.srcObject;
+        const tracks = stream.getTracks();
+        tracks.forEach(track => track.stop());
         videoElement.srcObject = null;
     }
 }
