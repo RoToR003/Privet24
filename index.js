@@ -1919,6 +1919,11 @@ async loadPage(pageName, pushState = true) {
     }
 };
 
+// Функція для виклику з HTML (обов'язкова для роботи кнопок!)
+window.goToPage = function(pageName) {
+    SPA.navigate(pageName);
+};
+
 // ============================================
 // АВТОМАТИЧНА ІНІЦІАЛІЗАЦІЯ
 // ============================================
@@ -1960,7 +1965,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    
     // Ініціалізувати подвійний клік для fullscreen на всіх сторінках
     initDoubleClickFullscreen();
     
