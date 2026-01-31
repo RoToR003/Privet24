@@ -672,44 +672,38 @@ function goToPayment() {
  */
 
 function initQRPage() {
-    // 1. Запуск камери
+    // 1. ВИПРАВЛЕННЯ НАЗВИ: Робимо так, щоб HTML бачив функцію switchCamera
+    window.switchCamera = switchQRCamera;
+
+    // 2. Запускаємо камеру
     startQRCamera();
     
-    // 2. Налаштування кліків по екрану (ЦЕ ОБ'ЄДНАНИЙ БЛОК)
+    // 3. Налаштування кліку по фону (Overlay)
     const overlay = document.querySelector('.overlay');
     
     if (overlay) {
-        // Видаляємо старі події (щоб не було глюків при повторному заході)
+        // Клонуємо, щоб очистити старі події
         const newOverlay = overlay.cloneNode(true);
         if (overlay.parentNode) {
             overlay.parentNode.replaceChild(newOverlay, overlay);
         }
         
-        // Додаємо подію кліку
+        // Додаємо подію: клік по фону -> оплата
         newOverlay.addEventListener('click', function(e) {
-            // Перевіряємо: чи клікнув користувач на кнопку?
-            // Якщо так (closest повернув елемент) — ми НІЧОГО не робимо, нехай спрацює кнопка.
+            // ІГНОРУЄМО кліки по кнопках (щоб вони спрацювали своїм стандартним onclick)
             if (e.target.closest('button') || e.target.closest('.icon-btn') || e.target.closest('.circle-btn')) {
                 return;
             }
-            
-            // Якщо клік був НЕ по кнопці (тобто по фону) — переходимо на оплату
+            // Якщо клік був по порожньому місцю
             goToPayment();
         });
     }
 
-    // 3. Налаштування кнопки "ліхтарика" (щоб вона вела на оплату)
+    // 4. Спеціальна обробка кнопки ліхтарика (якщо вона не спрацьовує через HTML)
     const paymentBtn = document.querySelector('.circle-btn[onclick*="goToPayment"]');
-    
     if (paymentBtn) {
-        // Видаляємо старий onclick з HTML, щоб він не заважав
-        paymentBtn.removeAttribute('onclick');
-        
-        // Додаємо правильний перехід на оплату
-        paymentBtn.addEventListener('click', function(e) {
-            e.stopPropagation(); // Це важливо: зупиняємо клік, щоб він не пішов на фон
-            goToPayment();
-        });
+        // Ми НЕ видаляємо onclick, а просто додаємо страховку
+        paymentBtn.style.zIndex = "100"; // Піднімаємо кнопку над шарами
     }
 }
 // ============================================
