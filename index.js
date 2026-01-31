@@ -2026,3 +2026,43 @@ window.onclick = function(event) {
         closeModal();
     }
 }
+
+// ============================================
+// ЛОГІКА ВСТАНОВЛЕННЯ PWA
+// ============================================
+
+let deferredPrompt; 
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    console.log('PWA готове до встановлення');
+    updateInstallButtonState();
+});
+
+async function installPWA() {
+    if (!deferredPrompt) {
+        alert('Встановлення зараз недоступне. Або ви не в Chrome/Android, або додаток вже стоїть.');
+        return;
+    }
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`Результат встановлення: ${outcome}`);
+    deferredPrompt = null;
+    updateInstallButtonState();
+}
+
+function updateInstallButtonState() {
+    const installBtn = document.getElementById('install-pwa-btn');
+    if (installBtn && deferredPrompt) {
+        installBtn.style.display = 'flex'; 
+    } else if (installBtn) {
+        installBtn.style.display = 'none';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', updateInstallButtonState);
+window.addEventListener('appinstalled', () => {
+    deferredPrompt = null;
+    updateInstallButtonState();
+});
