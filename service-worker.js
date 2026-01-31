@@ -1,4 +1,4 @@
-const CACHE_NAME = 'CasheV2';
+const CACHE_NAME = 'transport-v3-CAMERA-FIX-1'; // <--- 1. Зміни назву, щоб оновити кеш
 const urlsToCache = [
     './',
     './transport.html',
@@ -8,8 +8,10 @@ const urlsToCache = [
     './settings.html',
     './index.js',
     './manifest.json',
-    './icons/icon-192.png', // Перевір, чи існують ці файли у папці icons
-    './icons/icon-512.png'
+    './icons/icon-192.png',
+    './icons/icon-512.png',
+    // 2. Додай оце посилання (ОБОВ'ЯЗКОВО в лапках і з комою в кінці попереднього рядка):
+    'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js'
 ];
 
 // Встановлення Service Worker
