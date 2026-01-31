@@ -624,16 +624,9 @@ function stopQRCamera() {
     
     const videoElement = document.getElementById('camera-stream');
     
-    // 1. Зупиняємо поточний потік у стані (якщо є збережений)
-    if (streamRef) { // Використовуємо глобальну змінну streamRef, яку ми оголошували раніше
-        streamRef.getTracks().forEach(track => {
-            track.stop();
-            // console.log("Track stopped:", track.kind);
-        });
-        streamRef = null;
-    }
-
-    // 2. Зупиняємо потік прямо з елемента відео (для надійності)
+    // Видалено блок з streamRef, оскільки цієї змінної не існує
+    
+    // 2. Зупиняємо потік прямо з елемента відео
     if (videoElement && videoElement.srcObject) {
         const stream = videoElement.srcObject;
         const tracks = stream.getTracks();
@@ -641,6 +634,7 @@ function stopQRCamera() {
         videoElement.srcObject = null;
     }
 }
+
 
 /**
  * Switch camera (front/back)
