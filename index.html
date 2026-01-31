@@ -443,8 +443,6 @@
         </div>
     </div>
 
-    <!-- Картки квитків будуть генеруватися динамічно через JavaScript -->
-
     <div class="footer-btn-container">
         <button class="scan-btn" onclick="goToPage('qr')">Відсканувати QR-код</button>
     </div>
@@ -503,7 +501,9 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
     <script src="index.js"></script>
+
     <script>
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('service-worker.js')
