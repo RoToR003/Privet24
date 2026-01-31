@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Налаштування</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-body: #0f0f0f;
+            --bg-card: #212121;
+            --bg-card-hover: #2a2a2a;
+            --text-main: #dbdbdb;
+            --text-gray: #a0a0a0;
+            --green: #5dc12d;
+            --red: #ff4444;
+            --border-radius: 7px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+            padding-bottom: 40px;
+        }
+
+        /* --- ХЕДЕР --- */
+        .header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-title {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        /* --- СТАТИСТИКА --- */
+        .stats-section {
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-gray);
+            margin-bottom: 12px;
+            padding-left: 4px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card {
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .stat-card-full {
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-spent {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        /* --- НАЛАШТУВАННЯ --- */
+        .settings-section {
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        .setting-item {
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .setting-item:active {
+            background-color: var(--bg-card-hover);
+        }
+
+        .setting-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .setting-label {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .setting-description {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        /* --- ПЕРЕМИКАЧ (Виправлений) --- */
+        .toggle-switch {
+            position: relative;
+            width: 50px;       /* Фіксована ширина */
+            height: 30px;      /* Фіксована висота */
+            background-color: #3a3a3a;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            flex-shrink: 0;    /* Забороняємо стискання у флекс-контейнері */
+        }
+
+        .toggle-switch.active {
+            background-color: var(--green);
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 2px;          /* Відступ зверху */
+            left: 2px;         /* Відступ зліва */
+            width: 26px;       /* Розмір кружечка */
+            height: 26px;
+            background-color: #fff;
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(20px); /* Зсув вправо при активації */
+        }
+
+        /* --- НЕБЕЗПЕЧНА ЗОНА --- */
+        .danger-section {
+            width: 100%;
+        }
+
+        .danger-item {
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .danger-item:active {
+            background-color: var(--bg-card-hover);
+        }
+
+        .danger-label {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--red);
+        }
+
+        /* --- МОДАЛЬНЕ ВІКНО --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 320px;
+            width: 100%;
+        }
+
+        .modal-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+
+        .modal-text {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 24px;
+            line-height: 1.5;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .modal-btn:active {
+            opacity: 0.7;
+        }
+
+        .btn-cancel {
+            background-color: #3a3a3a;
+            color: var(--text-main);
+        }
+
+        .btn-confirm {
+            background-color: var(--red);
+            color: #fff;
+        }
+
+        /* --- ІНФО БЛОК --- */
+        .info-block {
+            width: 100%;
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            margin-top: 16px;
+        }
+
+        .info-text {
+            font-size: 13px;
+            color: var(--text-gray);
+            line-height: 1.5;
+        }
+        
+        /* --- СПИСОК КАМЕР --- */
+        .camera-item {
+            background-color: #2a2a2a;
+            border-radius: var(--border-radius);
+            padding: 12px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .camera-item:hover {
+            background-color: #333333;
+        }
+        
+        .camera-item.selected {
+            background-color: var(--green);
+            color: #000;
+        }
+        
+        .camera-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .camera-check {
+            width: 20px;
+            height: 20px;
+            display: none;
+        }
+        
+        .camera-item.selected .camera-check {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-left">
+            <button class="back-btn" onclick="goToPage('transport')">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 12H4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 18L4 12L10 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <div class="header-title">Налаштування</div>
+        </div>
+    </div>
+
+    <!-- СТАТИСТИКА -->
+    <div class="stats-section">
+        <div class="section-title">Статистика поїздок</div>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">Сьогодні</div>
+                <div class="stat-value" id="stat-today">0</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-label">За тиждень</div>
+                <div class="stat-value" id="stat-week">0</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-label">За місяць</div>
+                <div class="stat-value" id="stat-month">0</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-label">За весь час</div>
+                <div class="stat-value" id="stat-total">0</div>
+            </div>
+        </div>
+
+        <div class="stat-card-full">
+            <div>
+                <div class="stat-label">Всього витрачено</div>
+            </div>
+            <div class="total-spent" id="total-spent">0.00 UAH</div>
+        </div>
+        
+        <div class="stat-card-full" style="margin-top: 12px;">
+            <div>
+                <div class="stat-label">Розмір кешу</div>
+            </div>
+            <div class="total-spent" id="cache-size" style="font-size: 20px; color: var(--text-main);">0 KB</div>
+        </div>
+    </div>
+
+    <!-- НАЛАШТУВАННЯ -->
+    <div class="settings-section">
+        <div class="section-title">Основні</div>
+
+        <div class="setting-item" onclick="toggleLocalStorage()">
+            <div class="setting-info">
+                <div class="setting-label">Локальне збереження</div>
+                <div class="setting-description">Зберігати квитки на пристрої</div>
+            </div>
+            <div class="toggle-switch active" id="storage-toggle">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+
+        <div class="setting-item" onclick="toggleAlwaysFullscreen()">
+            <div class="setting-info">
+                <div class="setting-label">Завжди в повному екрані</div>
+                <div class="setting-description">Зберігати повноекранний режим при переходах між сторінками</div>
+            </div>
+            <div class="toggle-switch" id="always-fullscreen-toggle">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+
+        <div class="setting-item" onclick="toggleFullscreen()">
+            <div class="setting-info">
+                <div class="setting-label">Повноекранний режим</div>
+                <div class="setting-description">Негайно активувати/деактивувати повний екран</div>
+            </div>
+        </div>
+        
+        <div class="setting-item" onclick="toggleDoubleClickFullscreen()">
+            <div class="setting-info">
+                <div class="setting-label">Повний екран по подвійному кліку</div>
+                <div class="setting-description">Подвійний клік вмикає повноекранний режим</div>
+            </div>
+            <div class="toggle-switch active" id="dblclick-toggle">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+        
+        <div class="setting-item" onclick="toggleOfflineMode()">
+            <div class="setting-info">
+                <div class="setting-label">Офлайн режим</div>
+                <div class="setting-description">Працювати автономно без інтернету</div>
+            </div>
+            <div class="toggle-switch active" id="offline-toggle">
+                <div class="toggle-slider"></div>
+            </div>
+        </div>
+        
+        <div class="setting-item" onclick="openCameraSelector()">
+            <div class="setting-info">
+                <div class="setting-label">Вибір камери</div>
+                <div class="setting-description" id="camera-description">Автоматично</div>
+            </div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 5l7 7-7 7" stroke="#a0a0a0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- НЕБЕЗПЕЧНА ЗОНА -->
+    <div class="danger-section">
+        <div class="section-title">Небезпечна зона</div>
+
+        <div class="danger-item" onclick="showClearHistoryModal()">
+            <div class="danger-label">Очистити історію</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z" stroke="#ff4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+        
+        <div class="danger-item" onclick="clearCacheAndNotify()" style="margin-top: 12px;">
+            <div class="danger-label">Очистити кеш</div>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 12h18M3 6h18M3 18h18" stroke="#ff4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- ІНФОРМАЦІЯ -->
+    <div class="info-block">
+        <div class="info-text">
+            💡 <strong>Про кеш:</strong> Дані картки (баланс, номер) кешуються на 24 години для швидкості роботи. Кеш автоматично оновлюється щодоби.
+        </div>
+    </div>
+    
+    <div class="info-block">
+        <div class="info-text">
+            💡 <strong>Підказка:</strong> Натисніть двічі на порожнє місце в будь-якому місці додатку, щоб увімкнути повноекранний режим.
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНЕ ВІКНО ПІДТВЕРДЖЕННЯ -->
+    <div id="clearModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">Очистити історію?</div>
+            <div class="modal-text">
+                Оберіть що саме ви хочете видалити:
+            </div>
+            <div class="modal-buttons" style="flex-direction: column; gap: 8px;">
+                <button class="modal-btn btn-confirm" onclick="confirmClearHistory(true)" style="background-color: #ff6b6b;">
+                    Видалити все
+                </button>
+                <button class="modal-btn btn-confirm" onclick="confirmClearHistory(false)" style="background-color: #ffa726;">
+                    Видалити квитки, залишити статистику
+                </button>
+                <button class="modal-btn btn-cancel" onclick="closeClearModal()">
+                    Скасувати
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- МОДАЛЬНЕ ВІКНО ВИБОРУ КАМЕРИ -->
+    <div id="cameraModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title">Вибір камери</div>
+            <div class="modal-text">
+                Оберіть камеру для сканування QR-кодів:
+            </div>
+            <div id="camera-list" style="margin-bottom: 16px; max-height: 300px; overflow-y: auto;">
+                <!-- Список камер буде додано динамічно -->
+            </div>
+            <button class="modal-btn btn-cancel" onclick="closeCameraModal()" style="width: 100%;">
+                Закрити
+            </button>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

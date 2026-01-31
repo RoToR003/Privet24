@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Оплата проїзду</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-body: #0f0f0f;
+            --bg-ticket-card: #303030;
+            --bg-bank-card: #212121;
+            --bg-input: #404040;
+            --green: #5dc12d;
+            --text-main: #ffffff;
+            --text-gray: #a0a0a0;
+            --border-radius: 7px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            /* Великий відступ знизу для скролу */
+            padding-bottom: 350px; 
+            overflow-y: auto;
+        }
+
+        /* --- ХЕДЕР --- */
+        .header {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px; 
+            margin-bottom: 4px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-title {
+            color: #fff; 
+            font-size: 20px; 
+            font-weight: 500; 
+        }
+
+        .header-right-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-right-icon img {
+            height: 28px; 
+            width: auto;  
+            object-fit: contain;
+        }
+
+        /* --- ВКЛАДКИ --- */
+        .tabs-container {
+            width: 100%;
+            padding: 0 16px;
+            margin-bottom: 20px; 
+        }
+
+        .tabs {
+            display: flex;
+            background-color: #222222; 
+            border-radius: 20px;
+            padding: 3px;
+            height: 32px; 
+        }
+
+        .tab {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 500;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .tab.active {
+            color: var(--green); 
+            background-color: #333333; 
+        }
+
+        .tab:not(.active) {
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        /* --- ГОЛОВНА КАРТКА (КВИТКИ) --- */
+        .ticket-selection-card {
+            background-color: var(--bg-ticket-card);
+            width: calc(100% - 32px);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .ticket-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .ticket-info {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .custom-checkbox {
+            width: 17px;
+            height: 17px;
+            background-color: #626262; 
+            border-radius: 1.5px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0;
+            flex-shrink: 0;
+            overflow: hidden; 
+        }
+        
+        .custom-checkbox svg {
+            width: 100%; 
+            height: 100%;
+            fill: none;
+            stroke: #000;
+            stroke-width: 3;
+            stroke-linecap: square;
+            stroke-linejoin: miter;
+            transform: scale(1.2); 
+        }
+
+        .ticket-text-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ticket-name {
+            font-size: 16px;
+            color: #fff;
+            font-weight: 400;
+            margin-bottom: 4px;
+            line-height: 1.1;
+        }
+
+        .ticket-desc {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .ticket-price {
+            font-size: 17px;
+            font-weight: 700;
+            color: #fff;
+            white-space: nowrap;
+        }
+
+        .quantity-label {
+            text-align: center;
+            font-size: 19px;
+            font-weight: 900;
+            color: #e0e0e0;
+            margin-bottom: 12px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; 
+            gap: 12px;
+        }
+
+        /* --- КНОПКИ +/- --- */
+        .qty-btn {
+            width: 31px;
+            height: 31px;
+            min-width: 31px;
+            border-radius: 50%;
+            background-color: #494949;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0;
+            flex-shrink: 0;
+        }
+        
+        #btn-plus svg path { stroke: var(--green); }
+        #btn-minus svg path { stroke: #808080; }
+        
+        .qty-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .qty-input {
+            width: 100%; 
+            max-width: 170px; 
+            background-color: var(--bg-input); 
+            border: none;
+            border-radius: 8px;
+            height: 40px; 
+            color: #fff;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        /* --- ПРИХОВАНЕ ПОЛЕ ВВОДУ --- */
+        .transport-input-wrapper {
+            width: calc(100% - 32px);
+            /* [ЗМІНЕНО] Відступ збільшено до 250px (було 50px) */
+            margin-top: 250px; 
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative; 
+            z-index: 1; 
+        }
+
+        .transport-label {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-left: 4px;
+        }
+
+        .transport-input {
+            width: 100%;
+            background-color: var(--bg-ticket-card);
+            border: 1px solid transparent;
+            border-radius: var(--border-radius);
+            height: 50px;
+            padding: 0 16px;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .transport-input:focus {
+            border-color: var(--green);
+        }
+        
+        .transport-input::-webkit-outer-spin-button,
+        .transport-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .transport-input {
+            -moz-appearance: textfield;
+        }
+
+
+        /* --- НИЖНІЙ ФІКСОВАНИЙ БЛОК --- */
+        .fixed-bottom-sheet {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--bg-body);
+            z-index: 100; 
+            padding-bottom: 24px;
+            padding-top: 10px;
+        }
+
+        .payment-summary {
+            width: 100%;
+            padding: 0 16px;
+            margin-bottom: 8px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .summary-label {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .summary-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .cards-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            margin-top: 16px; 
+        }
+        
+        .all-cards-link {
+            color: var(--green);
+            font-size: 19px; 
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* --- КАРУСЕЛЬ КАРТОК --- */
+        .cards-carousel {
+            display: flex;
+            width: 100%;
+            overflow: hidden; 
+            padding-left: 16px; 
+            margin-bottom: 16px;
+            align-items: center;
+        }
+
+        .card-item {
+            background-color: var(--bg-bank-card);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            display: flex;
+            align-items: flex-start; 
+            position: relative;
+            flex-shrink: 0;
+            height: 100px;
+            border: 1px solid transparent;
+            background-clip: padding-box; 
+        }
+
+        .card-item.previous {
+            min-width: 24px;
+            width: 24px;
+            background-color: var(--bg-bank-card);
+            opacity: 1;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: var(--border-radius);
+            border-bottom-right-radius: var(--border-radius);
+            margin-left: -16px; 
+            margin-right: 10px;
+        }
+
+        .card-item.selected {
+            width: calc(100% - 48px);
+            border: 1px solid var(--green);
+            box-shadow: none; 
+        }
+
+        .card-img-box {
+            width: auto;
+            height: auto;
+            border-radius: 0; 
+            margin-right: 12px; 
+            margin-left: -6px; 
+            display: flex;
+            align-items: flex-start;
+            margin-top: 0; 
+        }
+
+        .card-img-box img {
+            height: 38px; 
+            width: auto;  
+            object-fit: contain; 
+            display: block;
+        }
+
+        .card-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            margin-top: 0px; 
+        }
+
+        .card-title-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .visa-text-logo {
+            height: 20px; 
+            width: auto;
+            margin-right: 8px; 
+            object-fit: contain;
+        }
+
+        .card-text-name {
+            font-size: 16px;
+            font-weight: 400;
+            color: #fff;
+        }
+
+        .card-number {
+            font-size: 15px;
+            color: #ffffff; 
+            margin-bottom: 6px;
+            opacity: 0.9;
+        }
+
+        .card-balance {
+            font-size: 18px;
+            font-weight: 500; 
+            color: #fff;
+        }
+
+        /* --- КНОПКА --- */
+        .footer-btn-wrapper {
+            width: 100%;
+            padding: 0 16px;
+        }
+
+        .buy-btn {
+            width: 100%;
+            background-color: var(--green);
+            color: #000;
+            border: none;
+            border-radius: var(--border-radius);
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-left">
+            <button class="back-btn" onclick="window.history.back()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 12H4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M10 18L4 12L10 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <div class="header-title">Оплата проїзду</div>
+        </div>
+        
+        <div class="header-right-icon" onclick="goToPage('index.html')" style="cursor: pointer;">
+            <img src="https://i.ibb.co/ycpRSNp5/Picsart-26-01-29-17-42-01-646.jpg" alt="Archive">
+        </div>
+    </div>
+
+    <div class="tabs-container">
+        <div class="tabs">
+            <div class="tab active">Квиток</div>
+            <div class="tab">Проїзний</div>
+        </div>
+    </div>
+
+    <div class="ticket-selection-card">
+        <div class="ticket-top-row">
+            <div class="ticket-info">
+                <div class="custom-checkbox">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M5 12l5 5L20 7" />
+                    </svg>
+                </div>
+                <div class="ticket-text-group">
+                    <div class="ticket-name">Проїзд</div>
+                    <div class="ticket-desc">Трамвай, Тролейбус</div>
+                </div>
+            </div>
+            <div class="ticket-price">12.00 UAH</div>
+        </div>
+
+        <div class="quantity-label">Кількість квитків</div>
+
+        <div class="quantity-controls">
+            <button class="qty-btn minus" id="btn-minus">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M5 12H19" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </button>
+            
+            <input type="text" class="qty-input" value="1" readonly id="qty-input">
+            
+            <button class="qty-btn plus" id="btn-plus">
+                <svg viewBox="0 0 24 24" fill="none">
+                    <path d="M12 5V19" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M5 12H19" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <div class="transport-input-wrapper">
+        <label class="transport-label">Номер транспорту</label>
+        <input type="tel" inputmode="numeric" pattern="[0-9]*" class="transport-input" placeholder="Введіть номер">
+    </div>
+
+    <div class="fixed-bottom-sheet">
+        <div class="payment-summary">
+            <div class="summary-row">
+                <div class="summary-label">До сплати</div>
+                <div class="summary-value" id="total-price">12.00 UAH</div>
+            </div>
+
+            <div class="cards-label-row">
+                <div class="summary-label">З картки</div>
+                <div class="all-cards-link">
+                    Усі 
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#5dc12d" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="cards-carousel">
+            <div class="card-item previous"></div>
+
+            <div class="card-item selected">
+                <div class="card-img-box">
+                    <img src="https://i.ibb.co/hTyK6Tx/Picsart-26-01-29-17-41-41-839.jpg" alt="Visa Card">
+                </div>
+                
+                <div class="card-details">
+                    <div class="card-title-row">
+                        <img src="https://i.ibb.co/0y9D9mD8/Picsart-26-01-29-18-17-06-761.jpg" alt="Visa" class="visa-text-logo">
+                        <span class="card-text-name">Картка для виплат</span>
+                    </div>
+                    
+                    <div class="card-number">•••• 9840 | UA53 •••• 8020854</div>
+                    <div class="card-balance">0.47 UAH</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-btn-wrapper">
+            <button class="buy-btn">Купити</button>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>

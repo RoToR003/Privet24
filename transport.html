@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Транспорт</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* --- КОЛЬОРИ --- */
+            --bg-body: #0f0f0f;      
+            --bg-item: #212121;      
+            --text-main: #dbdbdb;    
+            --border-radius-btn: 7px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 16px;
+        }
+
+        /* --- ВЕРХНЯ ЧАСТИНА (ХЕДЕР) --- */
+        .top-bar {
+            width: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            position: relative;
+            
+            height: 90px; 
+            margin-top: -15px;
+            padding-top: 10px; 
+        }
+
+        .back-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            margin-top: 8px; 
+            z-index: 10;
+        }
+
+        /* Контейнер для іконки та заголовка по центру */
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            position: absolute;
+            top: 10px; 
+            left: 0;
+            pointer-events: none;
+        }
+
+        .header-icon {
+            /* [ЗМІНЕНО] Зменшено на 1px (було 42px -> стало 41px) */
+            width: 41px; 
+            height: 41px;
+            
+            border-radius: 50%;
+            overflow: hidden;
+            
+            margin-bottom: 8px;
+            margin-top: 0px; 
+        }
+
+        .header-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .page-title {
+            font-size: 19px; 
+            font-weight: 400;
+            color: var(--text-main);
+            letter-spacing: 0.3px;
+            line-height: 1.2;
+        }
+
+        /* --- СПИСОК МЕНЮ --- */
+        .menu-list {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 16px; 
+            
+            /* [ЗМІНЕНО] Збільшено відступ зверху на 5px (було 0px -> стало 5px) */
+            margin-top: 5px; 
+        }
+
+        .menu-item {
+            background-color: var(--bg-item);
+            width: 100%;
+            padding: 17px 16px 17px 10px; 
+            border-radius: var(--border-radius-btn);
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .menu-item:active {
+            background-color: #333333;
+        }
+
+        .item-icon {
+            width: 42px;
+            height: 42px;
+            margin-right: 10px; 
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .item-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .item-text {
+            font-size: 16px; 
+            font-weight: 400;
+            color: var(--text-main);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <button class="back-btn">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 12H4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M10 18L4 12L10 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+
+        <div class="header-content">
+            <div class="header-icon">
+                <img src="https://i.ibb.co/cSMjFD5Y/Picsart-26-01-29-15-08-37-387.jpg" alt="Tickets">
+            </div>
+            <div class="page-title">Транспорт</div>
+        </div>
+    </div>
+
+    <div class="menu-list">
+        <div class="menu-item">
+            <div class="item-icon">
+                <img src="https://i.ibb.co/23Nbdh39/Picsart-26-01-29-15-09-08-727.jpg" alt="Train">
+            </div>
+            <div class="item-text">Поїзд</div>
+        </div>
+
+        <div class="menu-item" onclick="goToPage('settings')">
+            <div class="item-icon">
+                <img src="https://i.ibb.co/5gkP5ZBv/Picsart-26-01-29-15-09-59-963.jpg" alt="Plane">
+            </div>
+            <div class="item-text">Літак</div>
+        </div>
+
+        <div class="menu-item">
+            <div class="item-icon">
+                <img src="https://i.ibb.co/v8p18zj/Picsart-26-01-29-15-18-22-163.jpg" alt="Bus">
+            </div>
+            <div class="item-text">Автобус</div>
+        </div>
+
+        <div class="menu-item" onclick="goToPage('index')">
+            <div class="item-icon">
+                <img src="https://i.ibb.co/7JtyVry3/Picsart-26-01-29-15-19-07-001.jpg" alt="City Transport">
+            </div>
+            <div class="item-text">Міський транспорт</div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+</html>
