@@ -1792,7 +1792,7 @@ function initDoubleClickFullscreen() {
 }
 
 // ============================================
-// SPA ROUTER (Виправлений для Fullscreen)
+// SPA ROUTER (ВИПРАВЛЕНИЙ - ЗІ СТИЛЯМИ)
 // ============================================
 
 const SPA = {
@@ -1807,14 +1807,16 @@ const SPA = {
 
         // Визначаємо поточну сторінку при старті
         let path = window.location.pathname;
-        // Беремо ім'я файлу без .html (наприклад 'transport')
+        // Беремо ім'я файлу без .html
         let page = path.split('/').pop().replace('.html', '') || 'transport';
         
         // Запускаємо скрипти для поточної сторінки
         this.initPageScripts(page);
         
         // Відновлюємо фулскрін (якщо налаштовано)
-        restoreFullscreenIfNeeded();
+        if (typeof restoreFullscreenIfNeeded === 'function') {
+            restoreFullscreenIfNeeded();
+        }
     },
 
     navigate(pageName) {
@@ -1824,65 +1826,97 @@ const SPA = {
     async loadPage(pageName, pushState = true) {
         try {
             let htmlContent;
-            const fileName = pageName + '.html';
+            // Перевірка: якщо назва вже має .html, не додаємо його вдруге
+            const fileName = pageName.endsWith('.html') ? pageName : pageName + '.html';
+            // Чиста назва для кешу та історії (без .html)
+            const cleanPageName = pageName.replace('.html', '');
 
-            // 1. Беремо HTML (з кешу або завантажуємо)
-            if (this.pageCache[pageName]) {
-                htmlContent = this.pageCache[pageName];
+            // 1. Отримуємо HTML (з кешу або завантажуємо)
+            if (this.pageCache[cleanPageName]) {
+                htmlContent = this.pageCache[cleanPageName];
             } else {
                 const response = await fetch(fileName);
                 if (!response.ok) throw new Error('Page not found');
                 htmlContent = await response.text();
-                this.pageCache[pageName] = htmlContent;
+                this.pageCache[cleanPageName] = htmlContent;
             }
 
             // 2. Парсимо новий HTML
             const parser = new DOMParser();
             const doc = parser.parseFromString(htmlContent, 'text/html');
             
-            // Видаляємо скрипти з нового HTML, щоб не дублювалися
+            // === ОСЬ ТУТ БУЛА ПРОБЛЕМА: ОНОВЛЮЄМО СТИЛІ ===
+            
+            // Видаляємо старі стилі сторінок (теги <style>)
+            const oldStyles = document.head.querySelectorAll('style');
+            oldStyles.forEach(s => s.remove());
+
+            // Вставляємо нові стилі з завантаженої сторінки
+            const newStyles = doc.head.querySelectorAll('style');
+            newStyles.forEach(newStyle => {
+                const styleElement = document.createElement('style');
+                styleElement.textContent = newStyle.textContent;
+                document.head.appendChild(styleElement);
+            });
+            // =================================================
+
+            // 3. Підміняємо вміст BODY
+            // Спочатку видаляємо скрипти з нового HTML, щоб вони не виконувалися двічі
             const scripts = doc.body.querySelectorAll('script');
             scripts.forEach(s => s.remove());
-
-            // 3. ПІДМІНЯЄМО BODY (це дозволяє не змінювати структуру HTML файлів)
+            
             document.body.innerHTML = doc.body.innerHTML;
             document.title = doc.title;
 
-            // 4. Оновлюємо URL без перезавантаження
+            // 4. Оновлюємо URL в адресному рядку
             if (pushState) {
-                window.history.pushState({ page: pageName }, doc.title, fileName);
+                window.history.pushState({ page: cleanPageName }, doc.title, fileName);
             }
 
-            // 5. Ініціалізуємо логіку нової сторінки
-            this.initPageScripts(pageName);
+            // 5. Запускаємо логіку (скрипти) для нової сторінки
+            this.initPageScripts(cleanPageName);
             
             // Відновлюємо фулскрін
-            restoreFullscreenIfNeeded();
+            if (typeof restoreFullscreenIfNeeded === 'function') {
+                restoreFullscreenIfNeeded();
+            }
 
         } catch (error) {
             console.error('SPA Error:', error);
-            // Якщо щось пішло не так — звичайний перехід
-            window.location.href = pageName + '.html';
+            // Якщо щось пішло не так (наприклад, fetch не працює),
+            // робимо звичайний перехід браузера
+            window.location.href = pageName.endsWith('.html') ? pageName : pageName + '.html';
         }
     },
 
     initPageScripts(pageName) {
-        // Викликаємо функції ініціалізації залежно від сторінки
-        if (pageName === 'index' || pageName === '') initIndexPage();
-        else if (pageName === 'payment') initPaymentPage();
-        else if (pageName === 'qr') initQRPage();
-        else if (pageName === 'settings') initSettingsPage();
-        else if (pageName === 'transport') initTransportPage();
+        const cleanName = pageName.replace('.html', '');
         
-        // Перезапускаємо глобальні слухачі (дабл-клік)
-        initDoubleClickFullscreen(); 
+        // Викликаємо функції ініціалізації залежно від сторінки
+        if (cleanName === 'index' || cleanName === '') {
+            if (typeof initIndexPage === 'function') initIndexPage();
+        }
+        else if (cleanName === 'payment') {
+            if (typeof initPaymentPage === 'function') initPaymentPage();
+        }
+        else if (cleanName === 'qr') {
+            if (typeof initQRPage === 'function') initQRPage();
+        }
+        else if (cleanName === 'settings') {
+            if (typeof initSettingsPage === 'function') initSettingsPage();
+        }
+        else if (cleanName === 'transport') {
+            if (typeof initTransportPage === 'function') initTransportPage();
+        }
+        
+        // Перезапускаємо слухач подвійного кліку (якщо функція існує)
+        if (typeof initDoubleClickFullscreen === 'function') {
+            initDoubleClickFullscreen(); 
+        } else if (typeof initGlobalListeners === 'function') {
+            initGlobalListeners();
+        }
     }
 };
-
-// Глобальна функція для переходу
-function goToPage(pageName) {
-    SPA.navigate(pageName);
-}
 
 // ============================================
 // АВТОМАТИЧНА ІНІЦІАЛІЗАЦІЯ
