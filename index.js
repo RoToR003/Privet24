@@ -672,47 +672,44 @@ function goToPayment() {
  */
 
 function initQRPage() {
-    // 1. Тільки запускаємо камеру
+    // 1. Запускаємо камеру (це було і це залишилось)
     startQRCamera();
     
-    // 2. Додатково: Клік по фону (але не по кнопках) веде на оплату
+    // 2. Логіка кліку по фону (об'єднана в один правильний блок)
     const overlay = document.querySelector('.overlay');
+    
     if (overlay) {
-        // Клонуємо елемент, щоб очистити старі слухачі (щоб не дублювалися)
+        // Видаляємо старі обробники подій через клонування (щоб не натискалось 10 разів)
         const newOverlay = overlay.cloneNode(true);
         if (overlay.parentNode) {
             overlay.parentNode.replaceChild(newOverlay, overlay);
         }
         
+        // Додаємо подію кліку
         newOverlay.addEventListener('click', function(e) {
-            // Якщо клікнули на кнопку або іконку - нічого не робимо (спрацює onclick кнопки)
+            // Перевіряємо, чи клік був НЕ по кнопках (щоб кнопки працювали)
             if (e.target.closest('button') || e.target.closest('.icon-btn') || e.target.closest('.circle-btn')) {
                 return;
             }
-            // Якщо клікнули просто по фону - йдемо на оплату
+            // Якщо клікнули просто по фону — йдемо на оплату
+            goToPayment();
+        });
+    }
+
+    // 3. Налаштування кнопки ліхтарика (повернуто всередину функції)
+    const paymentBtn = document.querySelector('.circle-btn[onclick*="goToPayment"]');
+    
+    if (paymentBtn) {
+        // Прибираємо старий onclick з HTML, щоб керувати через JS
+        paymentBtn.removeAttribute('onclick');
+        
+        // Додаємо нову подію
+        paymentBtn.addEventListener('click', function(e) {
+            e.stopPropagation(); // Важливо: зупиняємо клік, щоб він не пішов далі на overlay
             goToPayment();
         });
     }
 }
-    
-    // Setup payment button (кнопка ліхтарика)
-    const paymentBtn = document.querySelector('.circle-btn[onclick*="goToPayment"]');
-    if (paymentBtn) {
-        paymentBtn.removeAttribute('onclick');
-        paymentBtn.addEventListener('click', goToPayment);
-    }
-    
-    // При кліку на overlay також переходити на оплату
-    const overlay = document.querySelector('.overlay');
-    if (overlay) {
-        overlay.addEventListener('click', function(e) {
-            if (!e.target.closest('.icon-btn') && !e.target.closest('.circle-btn')) {
-                goToPayment();
-            }
-        });
-    }
-}
-
 // ============================================
 // СТОРІНКА ОПЛАТИ (payment.html)
 // ============================================
