@@ -287,7 +287,7 @@ function createTicketCard(ticket) {
     
     // Таймер тільки для активних квитків
     const timerHTML = !isExpired ? `
-        <div class="timer" data-ticket-id="${ticket.id}" data-remaining="${remainingTime}">
+        <div class="timer" data-ticket-id="${ticket.id}" data-purchase-time="${ticket.purchaseTime}" data-duration="${ticket.duration}">
             ${formatTimer(remainingTime)}
         </div>
     ` : '';
@@ -353,13 +353,11 @@ let timerIntervals = [];
 /**
  * Запустити таймер для квитка
  */
-function startTimer(ticketId, timerElement, initialSeconds) {
-    let remainingSeconds = initialSeconds;
-
+function startTimer(ticketId, timerElement, purchaseTime, duration) {
     const interval = setInterval(() => {
-        remainingSeconds--;
+        const remaining = getRemainingTime({ purchaseTime, duration });
 
-        if (remainingSeconds <= 0) {
+        if (remaining <= 0) {
             // Час вийшов
             clearInterval(interval);
             timerElement.textContent = '00:00';
@@ -376,7 +374,7 @@ function startTimer(ticketId, timerElement, initialSeconds) {
             // Видалити таймер
             timerElement.remove();
         } else {
-            timerElement.textContent = formatTimer(remainingSeconds);
+            timerElement.textContent = formatTimer(remaining);
         }
     }, 1000);
 
@@ -401,10 +399,12 @@ function initializeTimers() {
         const timerElements = document.querySelectorAll('.timer[data-ticket-id]');
         timerElements.forEach(timerEl => {
             const ticketId = timerEl.dataset.ticketId;
-            const remaining = parseInt(timerEl.dataset.remaining);
+            const purchaseTime = timerEl.dataset.purchaseTime;
+            const duration = parseInt(timerEl.dataset.duration);
+            const remaining = getRemainingTime({ purchaseTime, duration });
             
             if (remaining > 0) {
-                startTimer(ticketId, timerEl, remaining);
+                startTimer(ticketId, timerEl, purchaseTime, duration);
             }
         });
     } catch (error) {
@@ -589,10 +589,7 @@ function scanQRCode() {
         
         if (code) {
             console.log("QR-код розпізнано:", code.data);
-            qrCameraState.scanningActive = false;
-            stopQRCamera();
-            sessionStorage.setItem('qr_scanned', 'true');
-            window.location.href = 'payment.html';
+            goToPayment();
             return;
         }
     } else {
@@ -1819,6 +1816,7 @@ const SPA = {
         if (typeof restoreFullscreenIfNeeded === 'function') {
             restoreFullscreenIfNeeded();
         }
+        return true;
     },
 
     navigate(pageName) {
@@ -1969,6 +1967,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Ініціалізувати подвійний клік для fullscreen на всіх сторінках
     initDoubleClickFullscreen();
+    
+    // Авто-підтяжка таймерів при поверненні до вкладки/додатку
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) {
+            const footerBtn = document.querySelector('.footer-btn-container');
+            if (footerBtn) {
+                displayTicketsOnIndexPage();
+            }
+        }
+    });
     
     // Відстежувати стан мережі
     initNetworkMonitoring();
