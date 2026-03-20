@@ -1,4 +1,4 @@
-const CACHE_NAME = 'prvt_cashev1'; // <--- 1. Зміни назву, щоб оновити кеш
+const CACHE_NAME = 'prvt_cashev2'; // <--- 1. Зміни назву, щоб оновити кеш
 const urlsToCache = [
     './',
     './transport.html',
@@ -8,6 +8,10 @@ const urlsToCache = [
     './settings.html',
     './index.js',
     './manifest.json',
+    './icons/icon-120.png',
+    './icons/icon-152.png',
+    './icons/icon-167.png',
+    './icons/icon-180.png',
     './icons/icon-192.png',
     './icons/icon-512.png',
     // 2. Додай оце посилання (ОБОВ'ЯЗКОВО в лапках і з комою в кінці попереднього рядка):
