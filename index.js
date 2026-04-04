@@ -1729,7 +1729,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Реєстрація Service Worker для офлайн режиму
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js?v=54')
+        navigator.serviceWorker.register('service-worker.js?v=55')
             .then(registration => {
                 console.log('✅ Service Worker зареєстровано:', registration.scope);
             })
