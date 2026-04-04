@@ -297,7 +297,7 @@
         }
 
         .data-label-passengers {
-            font-size: 21px;
+            font-size: 10px;
         }
 
         .data-value {
@@ -307,6 +307,14 @@
             letter-spacing: -0.100px;
             font-variant-numeric: lining-nums proportional-nums;
             font-feature-settings: 'lnum' 1, 'pnum' 1;
+        }
+
+        .ticket-data-value {
+            font-size: 18px;
+        }
+
+        .data-value-passengers {
+            font-size: 13px;
         }
 
         /* --- ЗЕЛЕНИЙ ТЕКСТ --- */
@@ -566,11 +574,11 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
-    <script src="index.js?v=50"></script>
+    <script src="index.js?v=54"></script>
 
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js?v=50')
+            navigator.serviceWorker.register('service-worker.js?v=54')
                 .then((reg) => console.log('Service worker registered'))
                 .catch((err) => console.log('Service worker registration failed:', err));
         }

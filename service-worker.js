@@ -1,4 +1,4 @@
-const CACHE_NAME = 'prvt_cachev50_transport_number_spacing';
+const CACHE_NAME = 'prvt_cachev54_ticket_data_values_size';
 const urlsToCache = [
     './',
     './transport.html',
@@ -6,7 +6,7 @@ const urlsToCache = [
     './payment.html',
     './qr.html',
     './settings.html',
-    './index.js?v=50',
+    './index.js?v=54',
     './core-sans.css?v=37',
     './fonts/core-sans-c/coresansc-400.otf?v=4',
     './fonts/core-sans-c/coresansc-500.otf?v=4',

@@ -21,6 +21,8 @@ const CONFIG = {
     }
 };
 
+const PASSENGER_DISPLAY_OFFSET = 5;
+
 // ============================================
 // ДОПОМІЖНІ ФУНКЦІЇ - ДАТА ТА ЧАС
 // ============================================
@@ -329,15 +331,15 @@ function createTicketCard(ticket) {
             <div class="data-grid">
                 <div class="data-item">
                     <div class="data-label">Дата</div>
-                    <div class="data-value">${formatDate(ticket.purchaseTime)}</div>
+                    <div class="data-value ticket-data-value">${formatDate(ticket.purchaseTime)}</div>
                 </div>
                 <div class="data-item">
                     <div class="data-label">Час</div>
-                    <div class="data-value">${formatTime(ticket.purchaseTime)}</div>
+                    <div class="data-value ticket-data-value">${formatTime(ticket.purchaseTime)}</div>
                 </div>
                 <div class="data-item">
                     <div class="data-label data-label-passengers">Пасажири</div>
-                    <div class="data-value">${ticket.passengers}</div>
+                    <div class="data-value ticket-data-value data-value-passengers">${Math.max(0, Number(ticket.passengers || 0) - PASSENGER_DISPLAY_OFFSET)}</div>
                 </div>
             </div>
 
@@ -1729,7 +1731,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Реєстрація Service Worker для офлайн режиму
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js?v=50')
+        navigator.serviceWorker.register('service-worker.js?v=54')
             .then(registration => {
                 console.log('✅ Service Worker зареєстровано:', registration.scope);
             })
