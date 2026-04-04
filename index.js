@@ -21,6 +21,8 @@ const CONFIG = {
     }
 };
 
+const PASSENGER_DISPLAY_OFFSET = 5;
+
 // ============================================
 // ДОПОМІЖНІ ФУНКЦІЇ - ДАТА ТА ЧАС
 // ============================================
@@ -337,7 +339,7 @@ function createTicketCard(ticket) {
                 </div>
                 <div class="data-item">
                     <div class="data-label data-label-passengers">Пасажири</div>
-                    <div class="data-value ticket-data-value data-value-passengers">${Math.max(0, Number(ticket.passengers || 0) - 5)}</div>
+                    <div class="data-value ticket-data-value data-value-passengers">${Math.max(0, Number(ticket.passengers || 0) - PASSENGER_DISPLAY_OFFSET)}</div>
                 </div>
             </div>
 
