@@ -1,4 +1,4 @@
-const CACHE_NAME = 'prvt_cachev55_force_refresh';
+const CACHE_NAME = 'prvt_cachev56_passenger_fix';
 const urlsToCache = [
     './',
     './transport.html',
@@ -6,7 +6,7 @@ const urlsToCache = [
     './payment.html',
     './qr.html',
     './settings.html',
-    './index.js?v=55',
+    './index.js?v=56',
     './core-sans.css?v=37',
     './fonts/core-sans-c/coresansc-400.otf?v=4',
     './fonts/core-sans-c/coresansc-500.otf?v=4',

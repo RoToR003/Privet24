@@ -296,10 +296,6 @@
             margin-bottom: 4px; 
         }
 
-        .data-label-passengers {
-            font-size: 10px;
-        }
-
         .data-value {
             color: var(--text-values);
             font-weight: 400;
@@ -311,10 +307,6 @@
 
         .ticket-data-value {
             font-size: 18px;
-        }
-
-        .data-value-passengers {
-            font-size: 13px;
         }
 
         /* --- ЗЕЛЕНИЙ ТЕКСТ --- */
@@ -574,7 +566,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
-    <script src="index.js?v=55"></script>
+    <script src="index.js?v=56"></script>
 
     <script>
         if ('serviceWorker' in navigator) {
@@ -585,7 +577,7 @@
                 window.location.reload();
             });
 
-            navigator.serviceWorker.register('service-worker.js?v=55')
+            navigator.serviceWorker.register('service-worker.js?v=56')
                 .then((reg) => {
                     console.log('Service worker registered');
                     reg.update();
