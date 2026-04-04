@@ -330,7 +330,7 @@ function createTicketCard(ticket) {
             <div class="data-grid">
                 <div class="data-item">
                     <div class="data-label">Дата</div>
-                    <div class="data-value ticket-data-value">${formatDate(ticket.purchaseTime)}</div>
+                    <div class="data-value ticket-data-value ticket-data-value-date">${formatDate(ticket.purchaseTime)}</div>
                 </div>
                 <div class="data-item">
                     <div class="data-label">Час</div>

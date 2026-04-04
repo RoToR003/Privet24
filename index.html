@@ -294,6 +294,14 @@
             align-items: center; 
         }
 
+        .data-grid .data-item:first-child {
+            transform: translateX(-10px);
+        }
+
+        .data-grid .data-item:last-child {
+            transform: translateX(10px);
+        }
+
         .data-label {
             color: var(--text-gray);
             font-size: 16.875px; 
@@ -304,7 +312,7 @@
             color: var(--text-values);
             font-weight: 400;
             font-size: 13.5px; 
-            letter-spacing: -1.75px;
+            letter-spacing: -0.75px;
             font-variant-numeric: lining-nums proportional-nums;
             font-feature-settings: 'lnum' 1, 'pnum' 1;
         }
@@ -313,9 +321,9 @@
             font-size: 18.5px;
         }
 
-        .data-grid .data-item:first-child .ticket-data-value {
+        .ticket-data-value-date {
             position: relative;
-            top: 1px;
+            top: 2px;
         }
 
         /* --- ЗЕЛЕНИЙ ТЕКСТ --- */
