@@ -272,6 +272,7 @@ function createTicketCard(ticket) {
     const transportNumber = isBusMode
         ? String(ticket.transportNumber || '').replace(/[^0-9]/g, '').slice(0, 4).padStart(4, '0')
         : ticket.transportNumber;
+    const transportNumberDisplay = String(transportNumber || '').replace(/4/g, '<span class="transport-number-digit-four">4</span>');
     const ticketVisualImage = isBusMode
         ? 'assets/images/ticket-visual-bus.jpg'
         : 'assets/images/ticket-visual.jpg';
@@ -323,7 +324,7 @@ function createTicketCard(ticket) {
                 <img src="${ticketVisualImage}" alt="Ticket Visual">
             </div>
 
-            <div class="transport-number"><span class="transport-number-sign">N<span class="transport-degree">°</span></span><span class="transport-number-value">${transportNumber}</span></div>
+            <div class="transport-number"><span class="transport-number-sign">N<span class="transport-degree">°</span></span><span class="transport-number-value">${transportNumberDisplay}</span></div>
             <div class="transport-type">${transportType}</div>
 
             <div class="data-grid">
