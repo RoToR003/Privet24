@@ -574,12 +574,37 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
-    <script src="index.js?v=54"></script>
+    <script src="index.js?v=55"></script>
 
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js?v=54')
-                .then((reg) => console.log('Service worker registered'))
+            let reloading = false;
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (reloading) return;
+                reloading = true;
+                window.location.reload();
+            });
+
+            navigator.serviceWorker.register('service-worker.js?v=55')
+                .then((reg) => {
+                    console.log('Service worker registered');
+                    reg.update();
+
+                    if (reg.waiting) {
+                        reg.waiting.postMessage('SKIP_WAITING');
+                    }
+
+                    reg.addEventListener('updatefound', () => {
+                        const newWorker = reg.installing;
+                        if (!newWorker) return;
+
+                        newWorker.addEventListener('statechange', () => {
+                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                                newWorker.postMessage('SKIP_WAITING');
+                            }
+                        });
+                    });
+                })
                 .catch((err) => console.log('Service worker registration failed:', err));
         }
     </script>

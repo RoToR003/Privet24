@@ -1,4 +1,4 @@
-const CACHE_NAME = 'prvt_cachev54_ticket_data_values_size';
+const CACHE_NAME = 'prvt_cachev55_force_refresh';
 const urlsToCache = [
     './',
     './transport.html',
@@ -6,7 +6,7 @@ const urlsToCache = [
     './payment.html',
     './qr.html',
     './settings.html',
-    './index.js?v=54',
+    './index.js?v=55',
     './core-sans.css?v=37',
     './fonts/core-sans-c/coresansc-400.otf?v=4',
     './fonts/core-sans-c/coresansc-500.otf?v=4',
@@ -61,6 +61,13 @@ self.addEventListener('activate', (event) => {
     );
 });
 
+// Дозволяє сторінці активувати новий SW без ручного перезапуску
+self.addEventListener('message', (event) => {
+    if (event.data === 'SKIP_WAITING') {
+        self.skipWaiting();
+    }
+});
+
 // Стратегія для fetch запитів - Network First, потім Cache
 self.addEventListener('fetch', (event) => {
     const { request } = event;
@@ -71,7 +78,7 @@ self.addEventListener('fetch', (event) => {
     // Для навігаційних запитів (HTML сторінки)
     if (request.mode === 'navigate') {
         event.respondWith(
-            fetch(request)
+            fetch(request, { cache: 'no-store' })
                 .then((response) => {
                     const responseToCache = response.clone();
                     caches.open(CACHE_NAME).then((cache) => {
@@ -97,8 +104,8 @@ self.addEventListener('fetch', (event) => {
         caches.match(request)
             .then((cachedResponse) => {
                 if (cachedResponse) {
-                    fetch(request).then((response) => {
-                        if (response && response.status === 200) {
+                    fetch(request, { cache: 'no-store' }).then((response) => {
+                        if (response && response.ok) {
                             caches.open(CACHE_NAME).then((cache) => {
                                 cache.put(request, response.clone());
                             });
@@ -107,8 +114,8 @@ self.addEventListener('fetch', (event) => {
                     return cachedResponse;
                 }
                 
-                return fetch(request).then((response) => {
-                    if (response && response.status === 200) {
+                return fetch(request, { cache: 'no-store' }).then((response) => {
+                    if (response && response.ok) {
                         const responseToCache = response.clone();
                         caches.open(CACHE_NAME).then((cache) => {
                             cache.put(request, responseToCache);
