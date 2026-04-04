@@ -1731,7 +1731,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Реєстрація Service Worker для офлайн режиму
     if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('service-worker.js?v=50')
+        navigator.serviceWorker.register('service-worker.js?v=53')
             .then(registration => {
                 console.log('✅ Service Worker зареєстровано:', registration.scope);
             })

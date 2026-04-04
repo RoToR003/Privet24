@@ -1,4 +1,4 @@
-const CACHE_NAME = 'prvt_cachev52_ticket_data_values_size';
+const CACHE_NAME = 'prvt_cachev53_ticket_data_values_size';
 const urlsToCache = [
     './',
     './transport.html',
