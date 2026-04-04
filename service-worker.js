@@ -6,7 +6,7 @@ const urlsToCache = [
     './payment.html',
     './qr.html',
     './settings.html',
-    './index.js?v=52',
+    './index.js?v=53',
     './core-sans.css?v=37',
     './fonts/core-sans-c/coresansc-400.otf?v=4',
     './fonts/core-sans-c/coresansc-500.otf?v=4',
