@@ -304,7 +304,7 @@
             color: var(--text-values);
             font-weight: 400;
             font-size: 13.5px; 
-            letter-spacing: -2px;
+            letter-spacing: -1.95px;
             font-variant-numeric: lining-nums proportional-nums;
             font-feature-settings: 'lnum' 1, 'pnum' 1;
         }
@@ -570,39 +570,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
-    <script src="index.js?v=57"></script>
-
-    <script>
-        if ('serviceWorker' in navigator) {
-            let reloading = false;
-            navigator.serviceWorker.addEventListener('controllerchange', () => {
-                if (reloading) return;
-                reloading = true;
-                window.location.reload();
-            });
-
-            navigator.serviceWorker.register('service-worker.js?v=57')
-                .then((reg) => {
-                    console.log('Service worker registered');
-                    reg.update();
-
-                    if (reg.waiting) {
-                        reg.waiting.postMessage('SKIP_WAITING');
-                    }
-
-                    reg.addEventListener('updatefound', () => {
-                        const newWorker = reg.installing;
-                        if (!newWorker) return;
-
-                        newWorker.addEventListener('statechange', () => {
-                            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                newWorker.postMessage('SKIP_WAITING');
-                            }
-                        });
-                    });
-                })
-                .catch((err) => console.log('Service worker registration failed:', err));
-        }
-    </script>
+    <script src="index.js?v=58"></script>
 </body>
 </html>
