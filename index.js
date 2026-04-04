@@ -336,7 +336,7 @@ function createTicketCard(ticket) {
                     <div class="data-value">${formatTime(ticket.purchaseTime)}</div>
                 </div>
                 <div class="data-item">
-                    <div class="data-label">Пасажири</div>
+                    <div class="data-label data-label-passengers">Пасажири</div>
                     <div class="data-value">${ticket.passengers}</div>
                 </div>
             </div>
