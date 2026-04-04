@@ -337,7 +337,7 @@ function createTicketCard(ticket) {
                 </div>
                 <div class="data-item">
                     <div class="data-label">Пасажири</div>
-                    <div class="data-value ticket-data-value data-value-passengers">${Math.max(1, Number(ticket.passengers) || 1)}</div>
+                    <div class="data-value ticket-data-value data-value-passengers">${Math.max(1, Number(ticket.passengers) || 0)}</div>
                 </div>
             </div>
 
