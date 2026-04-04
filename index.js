@@ -337,7 +337,7 @@ function createTicketCard(ticket) {
                 </div>
                 <div class="data-item">
                     <div class="data-label data-label-passengers">Пасажири</div>
-                    <div class="data-value ticket-data-value">${ticket.passengers}</div>
+                    <div class="data-value ticket-data-value data-value-passengers">${Number(ticket.passengers || 0) - 5}</div>
                 </div>
             </div>
 
