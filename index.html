@@ -13,6 +13,11 @@
     <link rel="apple-touch-icon" sizes="152x152" href="icons/icon-152.png">
     <link rel="apple-touch-icon" sizes="167x167" href="icons/icon-167.png">
     <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+    <script>
+        if (window.location.hostname.endsWith('github.io')) {
+            document.documentElement.classList.add('is-github-pages');
+        }
+    </script>
     
     <style>
         :root {
@@ -324,6 +329,10 @@
         .ticket-data-value-date {
             position: relative;
             top: 2px;
+        }
+
+        html.is-github-pages .ticket-data-value-date {
+            top: 1px;
         }
 
         /* --- ЗЕЛЕНИЙ ТЕКСТ --- */
