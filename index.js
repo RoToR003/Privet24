@@ -107,7 +107,7 @@ function formatSerialNumbers(serialsArray) {
         const pair = serialsArray.slice(i, i + 2);
         parts.push(pair.join(', '));
     }
-    return parts.join(',<br>');
+    return parts.join('<br>');
 }
 
 /**

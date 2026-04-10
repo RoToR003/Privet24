@@ -191,13 +191,16 @@
 
         .serial-label {
             color: var(--text-main);
-            font-weight: 400;
+            font-weight: 700;
+            display: block;
             margin-right: 2px; 
         }
 
         .serial-value {
             color: var(--text-main);
-            font-weight: 500; 
+            font-weight: 500;
+            display: block;
+            white-space: nowrap;
         }
 
         .info-icon {
@@ -222,8 +225,8 @@
             border: 3px solid #fff;
             border-radius: 8px; 
             overflow: hidden;
-            width: 125px;
-            height: 125px;
+            width: 156.25px;
+            height: 156.25px;
             background: #fff;
         }
 
@@ -379,6 +382,7 @@
             font-size: 16px;
             font-weight: 700;
             font-family: 'Pryvat Sans', sans-serif;
+            font-feature-settings: 'ss01' 0;
             cursor: pointer;
         }
 
