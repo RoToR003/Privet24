@@ -1,4 +1,4 @@
-const CACHE_NAME = 'prvt_cachev58_reload_fix';
+const CACHE_NAME = 'prvt_cachev59_pryvatsans';
 const urlsToCache = [
     './',
     './transport.html',
@@ -6,12 +6,10 @@ const urlsToCache = [
     './payment.html',
     './qr.html',
     './settings.html',
-    './index.js?v=58',
-    './core-sans.css?v=37',
-    './fonts/core-sans-c/coresansc-400.otf?v=4',
-    './fonts/core-sans-c/coresansc-500.otf?v=4',
-    './fonts/core-sans-c/coresansc-700.otf?v=4',
-    './fonts/core-sans-c/coresansc-900.otf?v=4',
+    './index.js?v=59',
+    './core-sans.css?v=38',
+    './fonts/PryvatSans-Regular.ttf?v=1',
+    './fonts/PryvatSans-Bold.ttf?v=1',
     './manifest.json',
     './icons/icon-120.png',
     './icons/icon-152.png',

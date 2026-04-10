@@ -1,186 +1,22 @@
 html,
 body {
     font-variant-numeric: lining-nums proportional-nums;
-    font-feature-settings: 'lnum' 1, 'pnum' 1;
+    font-feature-settings: 'ss01' 1, 'lnum' 1, 'pnum' 1;
     font-synthesis: none;
 }
 
 @font-face {
-    font-family: 'Core Sans C';
-    src: url('fonts/core-sans-c/coresansc-400.otf?v=4') format('opentype');
+    font-family: 'Pryvat Sans';
+    src: url('fonts/PryvatSans-Regular.ttf?v=1') format('truetype');
     font-style: normal;
     font-weight: 400;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'Core Sans C';
-    src: url('fonts/core-sans-c/coresansc-500.otf?v=4') format('opentype');
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C';
-    src: url('fonts/core-sans-c/coresansc-700.otf?v=4') format('opentype');
+    font-family: 'Pryvat Sans';
+    src: url('fonts/PryvatSans-Bold.ttf?v=1') format('truetype');
     font-style: normal;
     font-weight: 700;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C';
-    src: url('fonts/core-sans-c/coresansc-900.otf?v=4') format('opentype');
-    font-style: normal;
-    font-weight: 900;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C Digit4';
-    src: local('Roboto'), url('https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWubEbWmT.ttf') format('truetype');
-    font-style: normal;
-    font-weight: 400;
-    unicode-range: U+0034;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C Digit4';
-    src: local('Roboto'), url('https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWub2bWmT.ttf') format('truetype');
-    font-style: normal;
-    font-weight: 500;
-    unicode-range: U+0034;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C Digit4';
-    src: local('Roboto'), url('https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWuYjammT.ttf') format('truetype');
-    font-style: normal;
-    font-weight: 700;
-    unicode-range: U+0034;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C Digit4';
-    src: local('Roboto'), url('https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWuZtammT.ttf') format('truetype');
-    font-style: normal;
-    font-weight: 900;
-    unicode-range: U+0034;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C Signs';
-    src: local('Roboto'), url('https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWubEbWmT.ttf') format('truetype');
-    font-style: normal;
-    font-weight: 400;
-    unicode-range: U+002B, U+002D, U+007C, U+2013, U+2212;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C Signs';
-    src: local('Roboto'), url('https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWub2bWmT.ttf') format('truetype');
-    font-style: normal;
-    font-weight: 500;
-    unicode-range: U+002B, U+002D, U+007C, U+2013, U+2212;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C Signs';
-    src: local('Roboto'), url('https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWuYjammT.ttf') format('truetype');
-    font-style: normal;
-    font-weight: 700;
-    unicode-range: U+002B, U+002D, U+007C, U+2013, U+2212;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C Signs';
-    src: local('Roboto'), url('https://fonts.gstatic.com/s/roboto/v51/KFOMCnqEu92Fr1ME7kSn66aGLdTylUAMQXC89YmC2DPNWuZtammT.ttf') format('truetype');
-    font-style: normal;
-    font-weight: 900;
-    unicode-range: U+002B, U+002D, U+007C, U+2013, U+2212;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C Digit1';
-    src: local('PT Sans'), local('PTSans-Regular'), url('https://fonts.gstatic.com/l/font?kit=jizaRExUiTo99u79P0WWwdg&skey=fd0b32f0f3e6a1fc&v=v18') format('truetype');
-    font-style: normal;
-    font-weight: 400;
-    unicode-range: U+0031;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C Digit1';
-    src: local('PT Sans'), local('PTSans-Regular'), url('https://fonts.gstatic.com/l/font?kit=jizaRExUiTo99u79P0WWwdg&skey=fd0b32f0f3e6a1fc&v=v18') format('truetype');
-    font-style: normal;
-    font-weight: 500;
-    unicode-range: U+0031;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C Digit1';
-    src: local('PT Sans Bold'), local('PTSans-Bold'), url('https://fonts.gstatic.com/l/font?kit=jizfRExUiTo99u79B_mh4Om_KQQ&skey=a45e760d002c9b10&v=v18') format('truetype');
-    font-style: normal;
-    font-weight: 700;
-    unicode-range: U+0031;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C Digit1';
-    src: local('PT Sans Bold'), local('PTSans-Bold'), url('https://fonts.gstatic.com/l/font?kit=jizfRExUiTo99u79B_mh4Om_KQQ&skey=a45e760d002c9b10&v=v18') format('truetype');
-    font-style: normal;
-    font-weight: 900;
-    unicode-range: U+0031;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C LetterA';
-    src: local('Mulish'), url('https://fonts.gstatic.com/l/font?kit=1Ptyg83HX_SGhgqO0yLcmjzUAuWexZNRwaC9HdXvlQ&skey=9f5b077cc22e75c7&v=v18') format('truetype');
-    font-style: normal;
-    font-weight: 400;
-    unicode-range: U+0061, U+0430;
-    size-adjust: 105%;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C LetterA';
-    src: local('Mulish'), url('https://fonts.gstatic.com/l/font?kit=1Ptyg83HX_SGhgqO0yLcmjzUAuWexaFRwaC9HdXvlQ&skey=9f5b077cc22e75c7&v=v18') format('truetype');
-    font-style: normal;
-    font-weight: 500;
-    unicode-range: U+0061, U+0430;
-    size-adjust: 105%;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C LetterA';
-    src: local('Mulish'), url('https://fonts.gstatic.com/l/font?kit=1Ptyg83HX_SGhgqO0yLcmjzUAuWexXRWwaC9HdXvlQ&skey=9f5b077cc22e75c7&v=v18') format('truetype');
-    font-style: normal;
-    font-weight: 700;
-    unicode-range: U+0061, U+0430;
-    size-adjust: 105%;
-    font-display: swap;
-}
-
-@font-face {
-    font-family: 'Core Sans C LetterA';
-    src: local('Mulish'), url('https://fonts.gstatic.com/l/font?kit=1Ptyg83HX_SGhgqO0yLcmjzUAuWexTpWwaC9HdXvlQ&skey=9f5b077cc22e75c7&v=v18') format('truetype');
-    font-style: normal;
-    font-weight: 900;
-    unicode-range: U+0061, U+0430;
-    size-adjust: 105%;
     font-display: swap;
 }
