@@ -105,7 +105,7 @@ function formatSerialNumbers(serialsArray) {
     const parts = [];
     for (let i = 0; i < serialsArray.length; i += 2) {
         const pair = serialsArray.slice(i, i + 2);
-        parts.push(pair.join(', '));
+        parts.push(`<span class="serial-pair">${pair.join(', ')}</span>`);
     }
     return parts.join('<br>');
 }
@@ -265,7 +265,9 @@ function createTicketCard(ticket) {
     const remainingTime = getRemainingTime(ticket);
     const isBusMode = ticket.isBusMode === true || ticket.isBusMode === 'true';
     const busModeClass = isBusMode ? 'bus-mode' : '';
-    const companyName = 'КП Вінницька транспортна компанія';
+    const companyName = isBusMode
+        ? 'КП Вінницька транспортна<br>компанія автобуси'
+        : 'КП Вінницька транспортна<br>компанія';
     const transportType = isBusMode ? 'Автобус' : 'Вагон';
     const transportNumber = isBusMode
         ? String(ticket.transportNumber || '').replace(/[^0-9]/g, '').slice(0, 4).padStart(4, '0')
