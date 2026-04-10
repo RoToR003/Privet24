@@ -306,7 +306,7 @@ function createTicketCard(ticket) {
                     <div class="city-name">Вінниця</div>
                     <div class="company-name">${companyName}</div>
                     <div class="serial-block">
-                        <span class="serial-label">Серія</span>
+                        <span class="serial-label">Серія&nbsp;</span>
                         <span class="serial-value">${serialNumbersFormatted}</span>
                     </div>
                 </div>
