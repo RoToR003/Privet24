@@ -183,6 +183,9 @@
         }
 
         .serial-block {
+            display: flex;
+            align-items: flex-start;
+            column-gap: 2px;
             line-height: 1.4;
             font-size: 14px; 
             margin-top: 2px;
@@ -191,17 +194,28 @@
         .serial-label {
             color: var(--text-main);
             font-weight: 400;
-            margin-right: 2px; 
+            margin-right: 0;
+            white-space: nowrap;
+            flex: 0 0 auto;
         }
 
         .serial-value {
             color: var(--text-main);
             font-weight: 700;
+            display: block;
+            min-width: 0;
+            flex: 1 1 auto;
         }
 
         .serial-pair {
             white-space: nowrap;
             display: inline-block;
+        }
+
+        @media (max-width: 420px) {
+            .company-name {
+                font-size: 14px;
+            }
         }
 
         .info-icon {
