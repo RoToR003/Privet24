@@ -266,8 +266,8 @@ function createTicketCard(ticket) {
     const isBusMode = ticket.isBusMode === true || ticket.isBusMode === 'true';
     const busModeClass = isBusMode ? 'bus-mode' : '';
     const companyName = isBusMode
-        ? 'КП Вінницька транспортна<br>компанія автобуси'
-        : 'КП Вінницька транспортна<br>компанія';
+        ? 'КП Вінницька&nbsp;транспортна<br>компанія автобуси'
+        : 'КП Вінницька&nbsp;транспортна<br>компанія';
     const transportType = isBusMode ? 'Автобус' : 'Вагон';
     const transportNumber = isBusMode
         ? String(ticket.transportNumber || '').replace(/[^0-9]/g, '').slice(0, 4).padStart(4, '0')
